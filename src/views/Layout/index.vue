@@ -20,7 +20,7 @@
         </template>
       </van-tabbar-item>
       <van-tabbar-item icon="home-o" to="/profile">
-        <span>我的</span>
+        <span>{{ !!$store.state.user.token ? '我的' : '未登录' }}</span>
         <template #icon>
           <i class="toutiao toutiao-wode"></i>
         </template>

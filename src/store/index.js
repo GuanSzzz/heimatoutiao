@@ -9,17 +9,30 @@ export default new Vuex.Store({
     // 封装
     // token: storage.get('HMtoken') || {}
     // 二次封装
-    user: getToken() || {}
+    user: getToken() || {},
+    searchvalue: '',
+
+    // historylist: localStorage.setItem(
+    //   'historylist',
+    //   JSON.stringify([...new Set(arr)])
+    // ),
+    historylist: JSON.parse(localStorage.getItem('historylist')) || []
   },
   getters: {},
   mutations: {
     userToken (state, payload) {
       state.user = payload
-      // localStorage.setItem('HMtoken', JSON.stringify(payload))
-      // 封装
-      // storage.set('HMtoken', payload)
-      // 二次封装
       setToken(payload)
+    },
+    searchValue (state, payload) {
+      // 存搜素关键词
+      state.searchvalue = payload
+      // 存搜索历史 每次从本地取出不会消失
+      state.historylist.push(payload)
+      // 去重
+      state.historylist = [...new Set(state.historylist)]
+      // 再次存本地
+      localStorage.setItem('historylist', JSON.stringify(state.historylist))
     }
   },
   actions: {},

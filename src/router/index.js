@@ -34,6 +34,11 @@ const routes = [
         component: () => import('@/views/My')
       }
     ]
+  },
+  // 搜索页
+  {
+    path: '/search',
+    component: () => import('@/views/search')
   }
 ]
 

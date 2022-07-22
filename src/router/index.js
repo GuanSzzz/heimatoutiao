@@ -39,6 +39,11 @@ const routes = [
   {
     path: '/search',
     component: () => import('@/views/search')
+  },
+  // 详情页
+  {
+    path: '/detail',
+    component: () => import('@/views/Detail')
   }
 ]
 

@@ -38,3 +38,55 @@ export const userInfo = () => {
     }
   })
 }
+/**
+ * 收藏文章
+ * @param {String|Number}} target 收藏的目标文章id
+ * @returns Promise
+ */
+export const userLike = (target) => {
+  return request({
+    url: '/v1_0/article/collections',
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    data: {
+      target
+    }
+  })
+}
+/**
+ * 取消收藏
+ * @param {*} target
+ * @returns
+ */
+export const userNotLike = (target) => {
+  return request({
+    url: `/v1_0/article/collections/${target}`,
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+  })
+}
+/**
+ * 关注
+ * @param {String|Number}} target 收藏的目标文章id
+ * @returns Promise
+ */
+export const userFollowed = (target) => {
+  return request({
+    url: '/v1_0/user/followings',
+    method: 'POST',
+    data: {
+      target
+    }
+  })
+}
+/**
+ * 取关
+ * @param {*} target
+ * @returns
+ */
+export const userNotFollowed = (target) => {
+  return request({
+    url: `/v1_0/user/followings/${target}`,
+    method: 'DELETE'
+  })
+}

@@ -28,11 +28,14 @@ export default new Vuex.Store({
       // 存搜素关键词
       state.searchvalue = payload
       // 存搜索历史 每次从本地取出不会消失
-      state.historylist.push(payload)
+      state.historylist.unshift(payload)
       // 去重
       state.historylist = [...new Set(state.historylist)]
       // 再次存本地
       localStorage.setItem('historylist', JSON.stringify(state.historylist))
+    },
+    clearHistoryList (state) {
+      state.historylist = []
     }
   },
   actions: {},

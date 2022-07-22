@@ -1,3 +1,4 @@
+
 import request from '@/utils/request'
 
 /**
@@ -13,5 +14,14 @@ export const getArticleList = (channelId, timestamp) => {
       channel_id: channelId,
       timestamp
     }
+  })
+}
+/**
+ * 获取文章详情
+ * @returns Promise
+ */
+export const getArticle = (id) => {
+  return request({
+    url: `/v1_0/articles/${id}`
   })
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="goDetail">
     <!-- 没有图片 -->
     <van-cell
       :title="articleInfo.title"
@@ -42,12 +42,24 @@ export default {
     articleInfo: {
       type: Object,
       require: true
+    },
+    id: {
+      type: String,
+      require: true
     }
   },
   computed: {
     articleDesc () {
       const times = dayjs(this.articleInfo.pubdate).fromNow()
       return `${this.articleInfo.aut_name} ${this.articleInfo.comm_count}评论 ${times}`
+    }
+  },
+  methods: {
+    goDetail () {
+      this.$router.push({
+        path: '/detail',
+        query: { id: this.id }
+      })
     }
   }
 }

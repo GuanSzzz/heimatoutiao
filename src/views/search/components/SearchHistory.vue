@@ -41,6 +41,7 @@ export default {
     },
     removeAll () {
       localStorage.removeItem('historylist')
+      this.$store.commit('clearHistoryList')
       this.historylist = []
     },
     removeOne (index) {

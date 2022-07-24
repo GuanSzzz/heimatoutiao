@@ -46,7 +46,10 @@
         v-html="aeticleList.content"
       ></div>
       <van-divider>正文结束</van-divider>
+      <!-- 评论列表 -->
+      <commentsList :artID="artId" ref="commentsList"></commentsList>
     </main>
+    <!-- 底部 -->
     <footer>
       <van-tabbar class="footer">
         <van-tabbar-item class="item-btnnn">
@@ -72,7 +75,7 @@
                 show-word-limit
                 class="popup-txt"
               />
-              <van-button class="popup-btn">发布</van-button>
+              <van-button class="popup-btn" @click="sendMsg">发布</van-button>
             </van-popup>
           </template>
         </van-tabbar-item>
@@ -110,8 +113,11 @@ import {
   userLike,
   userNotLike,
   userFollowed,
-  userNotFollowed
+  userNotFollowed,
+  setComentsText
 } from '@/apis'
+// 引入组件
+import commentsList from './components/commentslist.vue'
 import Header from '@/components/Header.vue'
 import dayjs from '@/utils/dayjs'
 import '@/assets/css/news.css'
@@ -124,11 +130,13 @@ export default {
       show: false,
       message: '',
       isStar: false,
-      isFollow: ''
+      isFollow: '',
+      artId: this.$route.query.id
     }
   },
   components: {
-    Header
+    Header,
+    commentsList
   },
   methods: {
     showPopup () {
@@ -140,21 +148,19 @@ export default {
         // const id=this.$router
         console.dir(this.$route)
         const id = this.$route.query.id
-        console.log(id)
         const res = await getArticle(id)
         this.aeticleList = res.data.data
         this.isStar = this.aeticleList.is_collected
         this.isFollow = this.aeticleList.is_followed
-        console.log(res)
+        // console.log(res)
       } catch (error) {}
     },
     // 收藏
     async userLike () {
-      console.log(11)
       try {
         this.isStar = true
-        const res = await userLike(this.aeticleList.art_id)
-        console.log(res)
+        await userLike(this.aeticleList.art_id)
+
         this.$toast('收藏成功')
       } catch (error) {
         console.log(error)
@@ -165,8 +171,8 @@ export default {
     async userNOtLike () {
       try {
         this.isStar = false
-        const res = await userNotLike(this.aeticleList.art_id)
-        console.log(res)
+        await userNotLike(this.aeticleList.art_id)
+
         this.$toast('取消收藏成功')
       } catch (error) {
         this.$toast('取消收藏失败')
@@ -183,6 +189,18 @@ export default {
       await userNotFollowed(this.aeticleList.aut_id)
       this.isFollow = false
       this.$toast('取消关注')
+    },
+    // 发布评论
+    async sendMsg () {
+      try {
+        const res = await setComentsText(this.artId, this.message)
+        console.log(res)
+        this.$refs.commentsList.getCommentsList()
+        this.message = ''
+        this.show = false
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   created () {

@@ -24,7 +24,12 @@
           <van-col span="11">
             <!-- 编辑个人信息 -->
             <van-row class="code-row" type="flex" align="center" justify="end">
-              <van-button class="code-btn" size="mini">编辑资料</van-button>
+              <van-button
+                class="code-btn"
+                size="mini"
+                @click="$router.push('/edituser')"
+                >编辑资料</van-button
+              >
             </van-row>
           </van-col>
         </van-row>
@@ -117,7 +122,7 @@ export default {
             data: { data }
           } = await userInfo()
           this.userInfo = data
-          console.log(data)
+          // console.log(data)
         } catch (e) {
           this.$toast.fail('请重新登录')
         }

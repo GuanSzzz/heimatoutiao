@@ -44,6 +44,11 @@ const routes = [
   {
     path: '/detail',
     component: () => import('@/views/Detail')
+  },
+  // 编辑个人资料页面
+  {
+    path: '/edituser',
+    component: () => import('@/views/My/components/edituser.vue')
   }
 ]
 

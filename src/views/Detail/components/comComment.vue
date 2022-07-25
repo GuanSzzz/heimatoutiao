@@ -116,6 +116,9 @@ export default {
       this.isShow = true
     },
     async sendMsg () {
+      if (this.message.trim().length === 0) {
+        return this.$toast.fail('内容不能为空')
+      }
       const res = await setComentsText(
         this.comlist.com_id,
         this.message,

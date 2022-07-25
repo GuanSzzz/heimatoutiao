@@ -192,12 +192,16 @@ export default {
     },
     // 发布评论
     async sendMsg () {
+      if (this.message.trim().length === 0) {
+        return this.$toast.fail('内容不能为空')
+      }
       try {
         const res = await setComentsText(this.artId, this.message)
         console.log(res)
         this.$refs.commentsList.getCommentsList()
         this.message = ''
         this.show = false
+        this.aeticleList.comm_count++
       } catch (error) {
         console.log(error)
       }

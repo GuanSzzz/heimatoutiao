@@ -42,6 +42,7 @@
         autosize
         type="textarea"
         maxlength="7"
+        show-word-limit
       />
     </van-popup>
     <!-- 性别 -->
@@ -148,6 +149,9 @@ export default {
     // 确认按钮，昵称
     async onClickRight () {
       //   console.log('发请求')
+      if (this.message_name.trim().length === 0) {
+        return this.$toast.fail('内容不能为空')
+      }
       try {
         await setUserInfo({ name: this.message_name })
         this.show_name = false
